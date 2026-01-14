@@ -20,6 +20,7 @@
       </div>
     </header>
 
+    <!-- 抽專輯卡片 -->
     <section class="card">
       <div class="coverBox">
         <img id="cover" alt="album cover" />
@@ -43,8 +44,39 @@
       </div>
     </section>
 
+    <!-- 我的最愛 + 新增專輯 -->
     <section class="fav">
       <h2>我的最愛</h2>
+
+      <!-- 新增專輯表單 -->
+      <div class="add">
+        <h3>新增專輯</h3>
+
+        <div class="addRow">
+          <input
+            id="newName"
+            placeholder="顯示名稱（例：Radiohead — In Rainbows）"
+          />
+          <input
+            id="newUrl"
+            placeholder="Spotify 專輯連結（貼整段）"
+          />
+        </div>
+
+        <div class="addRow">
+          <input
+            id="newCover"
+            placeholder="封面圖片網址（可留空）"
+          />
+          <button id="btnAddAlbum" class="secondary">
+            ＋加入清單
+          </button>
+        </div>
+
+        <p class="hint">封面可不填，不填就先用預設封面。</p>
+      </div>
+
+      <!-- 最愛清單 -->
       <ul id="favList"></ul>
     </section>
   </main>
