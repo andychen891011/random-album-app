@@ -48,32 +48,34 @@
     <section class="fav">
       <h2>我的最愛</h2>
 
-      <!-- 新增專輯表單 -->
+      <!-- 新增專輯表單（爽版：貼 URL 就能自動抓） -->
       <div class="add">
         <h3>新增專輯</h3>
 
         <div class="addRow">
           <input
-            id="newName"
-            placeholder="顯示名稱（例：Radiohead — In Rainbows）"
-          />
-          <input
             id="newUrl"
-            placeholder="Spotify 專輯連結（貼整段）"
+            placeholder="貼 Spotify 專輯連結（必填）"
           />
         </div>
 
         <div class="addRow">
           <input
-            id="newCover"
-            placeholder="封面圖片網址（可留空）"
+            id="newName"
+            placeholder="顯示名稱（可不填，會自動抓）"
           />
-          <button id="btnAddAlbum" class="secondary">
-            ＋加入清單
-          </button>
+          <input
+            id="newCover"
+            placeholder="封面圖片網址（可不填，會自動抓）"
+          />
         </div>
 
-        <p class="hint">封面可不填，不填就先用預設封面。</p>
+        <div class="addRow">
+          <button id="btnAddAlbum" class="secondary">＋加入清單</button>
+          <button id="btnAutoFill" class="secondary">✨ 自動抓名稱/封面</button>
+        </div>
+
+        <p class="hint">你只要貼網址，直接按「加入清單」就會自動抓專輯名稱與封面。</p>
       </div>
 
       <!-- 最愛清單 -->
