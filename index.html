@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>隨機專輯</title>
 
-  <!-- GitHub Pages 一定要用相對路徑 -->
   <link rel="stylesheet" href="./style.css">
   <link rel="manifest" href="./manifest.json">
 </head>
@@ -16,7 +15,7 @@
       <div class="dice">🎲</div>
       <div>
         <h1>隨機專輯</h1>
-        <p class="sub">如果不知道要聽什麼，就按一下。</p>
+        <p class="sub">如果不知道要聽什麼，就按一下。也可以建抽籤池、批次匯入、備份。</p>
       </div>
     </header>
 
@@ -30,60 +29,109 @@
         <p id="result" class="result">（還沒抽）</p>
 
         <div class="actions">
-          <button id="btnRandom">抽一張專輯</button>
+          <button id="btnRandom">抽一張（從抽籤池）</button>
           <button id="btnFav" class="secondary">⭐ 加到最愛</button>
-          <a
-            id="openSpotify"
-            class="link"
-            target="_blank"
-            rel="noopener"
-          >
-            在 Spotify 打開
-          </a>
+          <a id="openSpotify" class="link" target="_blank" rel="noopener">在 Spotify 打開</a>
         </div>
       </div>
     </section>
 
-    <!-- 我的最愛 + 新增專輯 -->
-    <section class="fav">
-      <h2>我的最愛</h2>
-
-      <!-- 新增專輯表單（爽版：貼 URL 就能自動抓） -->
-      <div class="add">
-        <h3>新增專輯</h3>
-
-        <div class="addRow">
-          <input
-            id="newUrl"
-            placeholder="貼 Spotify 專輯連結（必填）"
-          />
+    <!-- 控制台 -->
+    <section class="panel">
+      <div class="panelHead">
+        <h2>控制台</h2>
+        <div class="panelActions">
+          <button id="btnResetRound" class="secondary">🔄 重置本輪不重複</button>
+          <button id="btnClearHistory" class="secondary">🧹 清空最近抽到</button>
         </div>
-
-        <div class="addRow">
-          <input
-            id="newName"
-            placeholder="顯示名稱（可不填，會自動抓）"
-          />
-          <input
-            id="newCover"
-            placeholder="封面圖片網址（可不填，會自動抓）"
-          />
-        </div>
-
-        <div class="addRow">
-          <button id="btnAddAlbum" class="secondary">＋加入清單</button>
-          <button id="btnAutoFill" class="secondary">✨ 自動抓名稱/封面</button>
-        </div>
-
-        <p class="hint">你只要貼網址，直接按「加入清單」就會自動抓專輯名稱與封面。</p>
       </div>
 
-      <!-- 最愛清單 -->
-      <ul id="favList"></ul>
+      <div class="grid2">
+        <!-- 新增 / 自動抓 -->
+        <div class="box">
+          <h3>新增一張（貼網址就好）</h3>
+          <div class="row">
+            <input id="newUrl" placeholder="Spotify 專輯連結（必填）" />
+          </div>
+          <div class="row">
+            <input id="newName" placeholder="顯示名稱（可不填，會自動抓）" />
+            <input id="newCover" placeholder="封面網址（可不填，會自動抓）" />
+          </div>
+          <div class="row">
+            <button id="btnAddAlbum" class="secondary">＋加入收藏庫</button>
+            <button id="btnAutoFill" class="secondary">✨ 自動抓名稱/封面</button>
+            <label class="chk">
+              <input type="checkbox" id="chkAddToPool" checked />
+              加入抽籤池
+            </label>
+          </div>
+          <p class="hint">你可以只貼連結就按「加入收藏庫」，我會自動抓標題與封面。</p>
+        </div>
+
+        <!-- 批次匯入 -->
+        <div class="box">
+          <h3>批次匯入（一次貼很多行）</h3>
+          <textarea id="batchInput" rows="6" placeholder="每行一個 Spotify 專輯連結&#10;https://open.spotify.com/album/...&#10;https://open.spotify.com/album/..."></textarea>
+          <div class="row">
+            <button id="btnBatchImport" class="secondary">📥 一鍵匯入（自動抓資訊）</button>
+            <label class="chk">
+              <input type="checkbox" id="chkBatchToPool" checked />
+              匯入後全部加入抽籤池
+            </label>
+          </div>
+          <p class="hint">會自動去重。抓不到資訊也會先用網址當名稱。</p>
+        </div>
+      </div>
+
+      <!-- 搜尋 / 篩選 -->
+      <div class="box">
+        <div class="panelHead slim">
+          <h3>收藏庫 / 抽籤池</h3>
+          <div class="panelActions">
+            <input id="search" class="search" placeholder="搜尋（例：蛙池 / In Rainbows）" />
+            <button id="btnPoolOnly" class="secondary">只看抽籤池</button>
+            <button id="btnShowAll" class="secondary">看全部</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <button id="btnPoolSelectAll" class="secondary">✅ 全加入池</button>
+          <button id="btnPoolSelectNone" class="secondary">🚫 全移出池</button>
+          <button id="btnClearCustom" class="secondary danger">🗑️ 清空自訂收藏</button>
+          <button id="btnClearFavs" class="secondary danger">🗑️ 清空最愛</button>
+        </div>
+
+        <ul id="libraryList" class="list"></ul>
+      </div>
+
+      <!-- 最愛 + 最近抽到 -->
+      <div class="grid2">
+        <div class="box">
+          <h3>我的最愛</h3>
+          <ul id="favList" class="list"></ul>
+        </div>
+
+        <div class="box">
+          <h3>最近抽到</h3>
+          <ul id="historyList" class="list"></ul>
+        </div>
+      </div>
+
+      <!-- 備份/還原 -->
+      <div class="box">
+        <div class="panelHead slim">
+          <h3>備份 / 還原</h3>
+          <div class="panelActions">
+            <button id="btnExport" class="secondary">📤 匯出 JSON（複製）</button>
+            <button id="btnImport" class="secondary">📥 匯入 JSON（貼上）</button>
+          </div>
+        </div>
+        <textarea id="backupArea" rows="5" placeholder="匯出後會出現在這裡；要還原就把 JSON 貼在這裡再按『匯入』"></textarea>
+        <p class="hint">換電腦也不怕。匯入會覆蓋你目前的收藏庫/池/最愛/最近。</p>
+      </div>
     </section>
   </main>
 
-  <!-- JS 一樣要用相對路徑 -->
   <script src="./app.js"></script>
 </body>
 </html>
