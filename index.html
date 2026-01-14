@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>隨機專輯</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+<body>
+  <main class="wrap">
+    <header class="title">
+      <div class="dice">🎲</div>
+      <div>
+        <h1>隨機專輯</h1>
+        <p class="sub">如果不知道要聽什麼，就按一下。</p>
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="coverBox">
+        <img id="cover" alt="album cover" />
+      </div>
+
+      <div class="info">
+        <p id="result" class="result">（還沒抽）</p>
+
+        <div class="actions">
+          <button id="btnRandom">抽一張專輯</button>
+          <button id="btnFav" class="secondary">⭐ 加到最愛</button>
+          <a id="openSpotify" class="link" target="_blank" rel="noopener">在 Spotify 打開</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="fav">
+      <h2>我的最愛</h2>
+      <ul id="favList"></ul>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
